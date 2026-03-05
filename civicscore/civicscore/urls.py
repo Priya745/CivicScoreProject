@@ -24,5 +24,5 @@ urlpatterns = [
     path('reports/', include('apps.reports.urls')),
     path('leaderboard/', include('apps.leaderboard.urls')),
     path('', include('apps.core.urls')),
-    path('dashboard', include('apps.dashboard.urls')),
+    path('dashboard/', include('apps.dashboard.urls')),
 ]
