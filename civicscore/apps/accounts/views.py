@@ -55,7 +55,7 @@ def register_view(request):
             messages.error(request, "Passwords do not match")
             return redirect("register")
 
-        # Username exists check
+        # Username exists check (read)
         if User.objects.filter(username=username).exists():
             messages.error(request, "Username already exists")
             return redirect("register")
@@ -68,13 +68,14 @@ def register_view(request):
        )
 
         # Save full name
-        user.first_name = name
+        user.first_name = name   #update
         user.save()
 
         messages.success(request, "Account created successfully!")
         return redirect("login")
 
     return render(request, "accounts/register.html")
+
 
 
 def logout_view(request):

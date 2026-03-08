@@ -1,15 +1,272 @@
 {% extends "base.html" %}
 
 {% block title %}
-Home | CivicScore
+Dashboard | CivicScore
 {% endblock %}
 
 {% block content %}
 
-<h1>Welcome to CivicScore 🚀</h1>
-<p>Encouraging responsible citizens through gamification.</p>
-<p>dashboard</p>
-dashboard
-dashboard
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+
+:root {
+    --dark-bg: #09090b;
+    --text-main: #18181b;
+    --text-muted: #52525b;
+    --accent-blue: #3b82f6;
+    --accent-purple: #8b5cf6;
+    --accent-teal: #14b8a6;
+
+    --glass-bg: rgba(255,255,255,0.7);
+    --glass-border: rgba(255,255,255,0.4);
+    --glass-shadow: 0 8px 32px rgba(31,38,135,0.07);
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#fafafa;
+}
+
+/* Background blobs */
+
+.blob{
+    position:absolute;
+    filter:blur(90px);
+    z-index:-1;
+    opacity:0.6;
+    border-radius:50%;
+}
+
+.blob-1{
+    width:500px;
+    height:500px;
+    top:-10%;
+    left:-10%;
+    background:rgba(139,92,246,0.4);
+}
+
+.blob-2{
+    width:400px;
+    height:400px;
+    top:20%;
+    right:-10%;
+    background:rgba(59,130,246,0.4);
+}
+
+.blob-3{
+    width:600px;
+    height:600px;
+    bottom:-20%;
+    left:20%;
+    background:rgba(20,184,166,0.3);
+}
+
+/* Dashboard Header */
+
+.dashboard-header{
+    margin-top:120px;
+}
+
+.dashboard-title{
+    font-weight:900;
+    font-size:40px;
+}
+
+.text-gradient{
+    background:linear-gradient(135deg,var(--accent-purple),var(--accent-blue));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+/* Glass Cards */
+
+.glass-card{
+    background:var(--glass-bg);
+    backdrop-filter:blur(16px);
+    border:1px solid var(--glass-border);
+    border-radius:24px;
+    padding:30px;
+    box-shadow:var(--glass-shadow);
+    transition:0.3s;
+}
+
+.glass-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 20px 40px rgba(0,0,0,0.08);
+}
+
+/* Stat Cards */
+
+.stat-icon{
+    font-size:30px;
+    margin-bottom:10px;
+    background:linear-gradient(135deg,var(--accent-purple),var(--accent-blue));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.stat-number{
+    font-size:32px;
+    font-weight:800;
+}
+
+/* Activity Table */
+
+.activity-table{
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.activity-table table{
+    width:100%;
+}
+
+.activity-table th{
+    font-weight:600;
+    color:var(--text-muted);
+}
+
+/* Button */
+
+.btn-gradient{
+    background:linear-gradient(135deg,var(--accent-purple),var(--accent-blue));
+    color:white;
+    border:none;
+    border-radius:40px;
+    padding:12px 28px;
+    font-weight:600;
+}
+
+.btn-gradient:hover{
+    opacity:0.9;
+}
+
+</style>
+
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+
+<div class="container dashboard-header">
+
+    <div class="d-flex justify-content-between align-items-center mb-5">
+
+        <div>
+            <h2 class="dashboard-title">
+                Welcome back, <span class="text-gradient">{{ user.username }}</span> 👋
+            </h2>
+
+            <p class="text-muted">
+                Track your civic activities and grow your impact.
+            </p>
+        </div>
+
+        <a href="{% url 'add_activity' %}" class="btn btn-gradient">
+            ➕ Submit Activity
+        </a>
+
+    </div>
+
+
+    <!-- Stats -->
+
+    <div class="row g-4 mb-5">
+
+        <div class="col-md-3">
+            <div class="glass-card text-center">
+                <div class="stat-icon">
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <div class="stat-number">{{ total_points|default:0 }}</div>
+                <p class="text-muted">Civic Points</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="glass-card text-center">
+                <div class="stat-icon">
+                    <i class="fa-solid fa-check-circle"></i>
+                </div>
+                <div class="stat-number">{{ activities_count|default:0 }}</div>
+                <p class="text-muted">Activities</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="glass-card text-center">
+                <div class="stat-icon">
+                    <i class="fa-solid fa-trophy"></i>
+                </div>
+                <div class="stat-number">{{ approved_count|default:0 }}</div>
+                <p class="text-muted">Approved</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="glass-card text-center">
+                <div class="stat-icon">
+                    <i class="fa-solid fa-award"></i>
+                </div>
+                <div class="stat-number">{{ approved_count|default:0 }}</div>
+                <p class="text-muted">Badges Earned</p>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <!-- Recent Activities -->
+
+    <div class="glass-card activity-table">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 style="font-weight:800; margin:0;">Recent Activities</h4>
+            <a href="{% url 'my_activities' %}" class="btn btn-sm btn-outline-primary">View All</a>
+        </div>
+
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th>Activity</th>
+                    <th>Date</th>
+                    <th>Points</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for activity in recent_activities %}
+                <tr>
+                    <td>{{ activity.get_activity_type_display }}</td>
+                    <td>{{ activity.created_at|date:"d M Y" }}</td>
+                    <td>{% if activity.points %}+{{ activity.points }}{% else %}—{% endif %}</td>
+                    <td>
+                        {% if activity.status == 'approved' %}
+                        <span class="badge bg-success">Approved</span>
+                        {% elif activity.status == 'rejected' %}
+                        <span class="badge bg-danger">Rejected</span>
+                        {% else %}
+                        <span class="badge bg-warning text-dark">Pending</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center text-muted py-4">No activities yet. <a href="{% url 'add_activity' %}">Submit your first activity!</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+</div>
+
 
 {% endblock %}

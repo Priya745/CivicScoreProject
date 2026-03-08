@@ -1,14 +1,223 @@
 {% extends "base.html" %}
 
 {% block title %}
-Home | CivicScore
+Leaderboard | CivicScore
 {% endblock %}
 
 {% block content %}
 
-<h1>Welcome to CivicScore 🚀</h1>
-<p>Encouraging responsible citizens through gamification.</p>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-leaderboard
+<style>
 
-{% endblock %} 
+/* ==============================
+GLOBAL STYLE
+============================== */
+
+:root{
+--accent-blue:#3b82f6;
+--accent-purple:#8b5cf6;
+--accent-teal:#14b8a6;
+--text-main:#18181b;
+--text-muted:#52525b;
+--glass-bg:rgba(255,255,255,0.7);
+--glass-border:rgba(255,255,255,0.4);
+}
+
+body{
+font-family:'Poppins',sans-serif;
+background:#fafafa;
+overflow-x:hidden;
+}
+
+
+/* ==============================
+BACKGROUND BLOBS
+============================== */
+
+.blob{
+position:absolute;
+filter:blur(90px);
+z-index:-1;
+opacity:0.6;
+border-radius:50%;
+}
+
+.blob-1{
+top:-10%;
+left:-10%;
+width:500px;
+height:500px;
+background:rgba(139,92,246,0.4);
+}
+
+.blob-2{
+top:20%;
+right:-10%;
+width:400px;
+height:400px;
+background:rgba(59,130,246,0.4);
+}
+
+.blob-3{
+bottom:-20%;
+left:20%;
+width:600px;
+height:600px;
+background:rgba(20,184,166,0.3);
+}
+
+
+/* ==============================
+HEADER
+============================== */
+
+.page-header{
+margin-top:120px;
+text-align:center;
+margin-bottom:60px;
+}
+
+.page-header h1{
+font-size:44px;
+font-weight:900;
+}
+
+.text-gradient{
+background:linear-gradient(135deg,var(--accent-purple),var(--accent-blue),var(--accent-teal));
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+
+/* ==============================
+LEADERBOARD CARD
+============================== */
+
+.glass-card{
+background:var(--glass-bg);
+backdrop-filter:blur(16px);
+border:1px solid var(--glass-border);
+border-radius:24px;
+padding:40px;
+box-shadow:0 8px 32px rgba(31,38,135,0.07);
+}
+
+
+/* ==============================
+TABLE STYLE
+============================== */
+
+.leaderboard-table{
+width:100%;
+border-collapse:collapse;
+}
+
+.leaderboard-table th{
+text-align:left;
+padding:16px;
+font-weight:700;
+color:var(--text-muted);
+border-bottom:1px solid #e4e4e7;
+}
+
+.leaderboard-table td{
+padding:18px 16px;
+font-weight:500;
+border-bottom:1px solid #f4f4f5;
+}
+
+.leaderboard-table tr:hover{
+background:rgba(139,92,246,0.05);
+transition:0.2s;
+}
+
+/* Rank badge */
+
+.rank{
+font-weight:800;
+font-size:18px;
+}
+
+/* top ranks */
+
+.rank-1{
+color:#f59e0b;
+}
+
+.rank-2{
+color:#9ca3af;
+}
+
+.rank-3{
+color:#b45309;
+}
+
+/* badge icon */
+
+.badge-icon{
+font-size:20px;
+}
+
+</style>
+
+
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+
+
+<div class="container">
+
+<div class="page-header">
+
+<h1>🏆 CivicScore <span class="text-gradient">Leaderboard</span></h1>
+
+<p class="text-muted">
+Top citizens making the biggest impact in the community
+</p>
+
+</div>
+
+
+<div class="glass-card">
+
+<table class="leaderboard-table">
+
+<thead>
+
+<tr>
+<th>Rank</th>
+<th>Username</th>
+<th>Points</th>
+<th>Badge</th>
+</tr>
+
+</thead>
+
+<tbody>
+{% for item in leaderboard %}
+<tr>
+    <td class="rank {% if forloop.counter == 1 %}rank-1{% elif forloop.counter == 2 %}rank-2{% elif forloop.counter == 3 %}rank-3{% endif %}">
+        {% if forloop.counter == 1 %}🥇{% elif forloop.counter == 2 %}🥈{% elif forloop.counter == 3 %}🥉{% endif %}
+        {{ forloop.counter }}
+    </td>
+    <td>{{ item.user.username }}</td>
+    <td>{{ item.total_points }}</td>
+    <td class="badge-icon">{% if forloop.counter <= 3 %}🏆{% else %}🌟{% endif %}</td>
+</tr>
+{% empty %}
+<tr>
+    <td colspan="4" class="text-center text-muted py-5">No scores yet. Submit activities to appear on the leaderboard!</td>
+</tr>
+{% endfor %}
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+{% endblock %}
