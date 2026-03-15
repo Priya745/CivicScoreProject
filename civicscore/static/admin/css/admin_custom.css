@@ -1,0 +1,57 @@
+/* CivicScore Admin - Custom Look and Feel */
+
+/* Header / branding */
+#header {
+    background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+    color: #fff;
+}
+
+#branding h1 {
+    margin: 0;
+    padding: 10px 20px;
+}
+
+#branding h1 a:link,
+#branding h1 a:visited {
+    color: #fff;
+    font-weight: 700;
+}
+
+/* Module captions (app names) */
+#content-main .module h2,
+.breadcrumbs {
+    background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+    color: #fff;
+}
+
+/* Links */
+a:link, a:visited {
+    color: #6366f1;
+}
+
+a:hover {
+    color: #8b5cf6;
+}
+
+/* Buttons */
+.button, input[type=submit], input[type=button], .submit-row input {
+    background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+    color: #fff;
+    border: none;
+}
+
+.button:hover, input[type=submit]:hover, input[type=button]:hover {
+    background: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%);
+}
+
+/* Changelist table header */
+#changelist table thead th {
+    background: #f3f4f6;
+    color: #374151;
+    font-weight: 600;
+}
+
+/* Selected row in changelist */
+#changelist .results tr.selected {
+    background: rgba(139, 92, 246, 0.1);
+}

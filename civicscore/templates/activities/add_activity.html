@@ -6,146 +6,145 @@ Submit Activity | CivicScore
 
 {% block content %}
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
 
 <style>
-
-/* =============================
+    /* =============================
 GLOBAL STYLE
 ============================= */
 
-:root {
-    --text-main:#18181b;
-    --text-muted:#52525b;
-    --accent-blue:#3b82f6;
-    --accent-purple:#8b5cf6;
-    --accent-teal:#14b8a6;
+    :root {
+        --text-main: #18181b;
+        --text-muted: #52525b;
+        --accent-blue: #3b82f6;
+        --accent-purple: #8b5cf6;
+        --accent-teal: #14b8a6;
 
-    --glass-bg:rgba(255,255,255,0.7);
-    --glass-border:rgba(255,255,255,0.4);
-}
+        --glass-bg: rgba(255, 255, 255, 0.7);
+        --glass-border: rgba(255, 255, 255, 0.4);
+    }
 
-body{
-font-family:'Poppins',sans-serif;
-background:#fafafa;
-}
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: #fafafa;
+    }
 
-/* =============================
+    /* =============================
 BACKGROUND BLOBS
 ============================= */
 
-.blob{
-position:absolute;
-filter:blur(90px);
-z-index:-1;
-opacity:0.6;
-border-radius:50%;
-}
+    .blob {
+        position: absolute;
+        filter: blur(90px);
+        z-index: -1;
+        opacity: 0.6;
+        border-radius: 50%;
+    }
 
-.blob-1{
-top:-10%;
-left:-10%;
-width:500px;
-height:500px;
-background:rgba(139,92,246,0.4);
-}
+    .blob-1 {
+        top: -10%;
+        left: -10%;
+        width: 500px;
+        height: 500px;
+        background: rgba(139, 92, 246, 0.4);
+    }
 
-.blob-2{
-top:20%;
-right:-10%;
-width:400px;
-height:400px;
-background:rgba(59,130,246,0.4);
-}
+    .blob-2 {
+        top: 20%;
+        right: -10%;
+        width: 400px;
+        height: 400px;
+        background: rgba(59, 130, 246, 0.4);
+    }
 
-.blob-3{
-bottom:-20%;
-left:20%;
-width:600px;
-height:600px;
-background:rgba(20,184,166,0.3);
-}
+    .blob-3 {
+        bottom: -20%;
+        left: 20%;
+        width: 600px;
+        height: 600px;
+        background: rgba(20, 184, 166, 0.3);
+    }
 
-/* =============================
+    /* =============================
 PAGE HEADER
 ============================= */
 
-.page-header{
-margin-top:120px;
-text-align:center;
-}
+    .page-header {
+        margin-top: 120px;
+        text-align: center;
+    }
 
-.page-header h1{
-font-weight:900;
-font-size:42px;
-}
+    .page-header h1 {
+        font-weight: 900;
+        font-size: 42px;
+    }
 
-.text-gradient{
-background:linear-gradient(135deg,var(--accent-purple),var(--accent-blue),var(--accent-teal));
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
+    .text-gradient {
+        background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue), var(--accent-teal));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
 
-/* =============================
+    /* =============================
 FORM CARD
 ============================= */
 
-.glass-card{
-background:var(--glass-bg);
-backdrop-filter:blur(16px);
-border:1px solid var(--glass-border);
-border-radius:24px;
-padding:40px;
-box-shadow:0 8px 32px rgba(31,38,135,0.07);
-}
+    .glass-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(16px);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        padding: 40px;
+        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.07);
+    }
 
-/* =============================
+    /* =============================
 FORM INPUTS
 ============================= */
 
-.form-control,
-.form-select{
-border-radius:12px;
-padding:12px;
-border:1px solid #e4e4e7;
-}
+    .form-control,
+    .form-select {
+        border-radius: 12px;
+        padding: 12px;
+        border: 1px solid #e4e4e7;
+    }
 
-.form-control:focus{
-box-shadow:none;
-border-color:var(--accent-purple);
-}
+    .form-control:focus {
+        box-shadow: none;
+        border-color: var(--accent-purple);
+    }
 
-/* =============================
+    /* =============================
 BUTTON
 ============================= */
 
-.btn-gradient{
-background:linear-gradient(135deg,var(--accent-purple),var(--accent-blue));
-border:none;
-color:white;
-padding:14px 32px;
-border-radius:40px;
-font-weight:600;
-}
+    .btn-gradient {
+        background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+        border: none;
+        color: white;
+        padding: 14px 32px;
+        border-radius: 40px;
+        font-weight: 600;
+    }
 
-.btn-gradient:hover{
-opacity:0.9;
-}
+    .btn-gradient:hover {
+        opacity: 0.9;
+    }
 
-/* =============================
+    /* =============================
 IMAGE SECTION
 ============================= */
 
-.activity-gallery img{
-border-radius:20px;
-transition:0.3s;
-box-shadow:0 10px 25px rgba(0,0,0,0.1);
-}
+    .activity-gallery img {
+        border-radius: 20px;
+        transition: 0.3s;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
 
-.activity-gallery img:hover{
-transform:scale(1.04);
-}
-
+    .activity-gallery img:hover {
+        transform: scale(1.04);
+    }
 </style>
 
 
@@ -156,114 +155,141 @@ transform:scale(1.04);
 
 <div class="container">
 
-<!-- PAGE TITLE -->
+    <!-- PAGE TITLE -->
 
-<div class="page-header mb-5">
+    <div class="page-header mb-5">
 
-<h1>
-Submit Your <span class="text-gradient">Civic Activity</span>
-</h1>
+        <h1>
+            Submit Your <span class="text-gradient">Civic Activity</span>
+        </h1>
 
-<p class="text-muted">
-Upload proof of your community work and earn CivicScore points.
-</p>
+        <p class="text-muted">
+            Upload proof of your community work and earn CivicScore points.
+        </p>
 
-</div>
-
-
-<div class="row g-5 align-items-center">
+    </div>
 
 
-<!-- FORM -->
-
-<div class="col-lg-6">
-
-<div class="glass-card">
-
-<form method="POST" enctype="multipart/form-data">
-
-{% csrf_token %}
-
-<div class="mb-4">
-
-<label class="form-label fw-semibold">Activity Type</label>
-
-<select class="form-select" name="activity_type" required>
-
-<option value="">Select Activity</option>
-<option value="tree">Tree Plantation</option>
-<option value="clean">Cleanliness Drive</option>
-<option value="blood">Blood Donation</option>
-<option value="volunteer">Volunteering</option>
-<option value="teaching">Teaching / Mentoring</option>
-<option value="others">Others</option>
-
-</select>
-
-</div>
+    <div class="row g-5 align-items-center">
 
 
-<div class="mb-4">
+        <!-- FORM -->
 
-<label class="form-label fw-semibold">Description</label>
+        <div class="col-lg-6">
 
-<textarea class="form-control" rows="4"
-placeholder="Describe what you did for the community..."
-name="description"></textarea>
+            <div class="glass-card">
 
-</div>
+                <form method="POST" enctype="multipart/form-data">
+
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}      <!--form.non_field_errors – Django puts here errors raised in ModelForm.clean() or Form.clean() (e.g. “Description and proof don’t match”).-->
+                    </div>
+                    {% endif %}
+
+                    <div class="mb-4">
+
+                        <label class="form-label fw-semibold">Activity Type</label>
+
+                        <select class="form-select" name="activity_type" required>
+
+                            <option value="">Select Activity</option>
+                            <option value="tree">Tree Plantation</option>
+                            <option value="clean">Cleanliness Drive</option>
+                            <option value="blood">Blood Donation</option>
+                            <option value="volunteer">Volunteering</option>
+                            <option value="teaching">Teaching / Mentoring</option>
+                            <option value="others">Others</option>
+
+                        </select>
+
+                        {% if form.activity_type.errors %}            <!--form.activity_type.errors – List of error messages for activity_type (e.g. invalid choice, required).-->
+                        <div class="text-danger small mt-1">
+                            {{ form.activity_type.errors }}
+                        </div>
+                        {% endif %}
+
+                    </div>
 
 
-<div class="mb-4">
+                    <div class="mb-4">
 
-<label class="form-label fw-semibold">Upload Proof</label>
+                        <label class="form-label fw-semibold">Description</label>
 
-<input type="file" class="form-control" name="proof">
+                        <textarea class="form-control" rows="4" placeholder="Describe what you did for the community..."
+                            name="description"></textarea>
 
-</div>
+                        {% if form.description.errors %}          <!--Uses form.description.errors (e.g. “This field is required”, “Too short”).-->
+                        <div class="text-danger small mt-1">
+                            {{ form.description.errors }}
+                        </div>
+                        {% endif %}
 
-
-<button type="submit" class="btn-gradient w-100">
-
-Submit Activity
-
-</button>
-
-</form>
-
-</div>
-
-</div>
+                    </div>
 
 
+                    <div class="mb-4">
 
-<!-- IMAGE SIDE -->
+                        <label class="form-label fw-semibold">Upload Proof</label>
 
-<div class="col-lg-6">
+                        <input type="file" class="form-control" name="proof">
 
-<div class="row g-4 activity-gallery">
+                        {% if form.proof.errors %}    <!--form.proof.errors – Messages for the file (e.g. “This field is required”, “Invalid file type”, “File too large”).-->
+                        <div class="text-danger small mt-1">
+                            {{ form.proof.errors }}
+                        </div>
+                        {% endif %}
 
-<div class="col-6">
-<img src="https://images.unsplash.com/photo-1469571486292-b53601010376?auto=format&fit=crop&w=600&q=80" class="img-fluid">
-</div>
+                    </div>
 
-<div class="col-6">
-<img src="https://images.unsplash.com/photo-1593113630400-ea4288922497?auto=format&fit=crop&w=600&q=80" class="img-fluid">
-</div>
 
-<div class="col-6">
-<img src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=600&q=80" class="img-fluid">
-</div>
+                    <button type="submit" class="btn-gradient w-100">
 
-<div class="col-6">
-<img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=600&q=80" class="img-fluid">
-</div>
+                        Submit Activity
 
-</div>
+                    </button>
 
-</div>
+                </form>
 
-</div>
+            </div>
+
+        </div>
+
+
+
+        <!-- IMAGE SIDE -->
+
+        <div class="col-lg-6">
+
+            <div class="row g-4 activity-gallery">
+
+                <div class="col-6">
+                    <img src="https://images.unsplash.com/photo-1469571486292-b53601010376?auto=format&fit=crop&w=600&q=80"
+                        class="img-fluid">
+                </div>
+
+                <div class="col-6">
+                    <img src="https://images.unsplash.com/photo-1593113630400-ea4288922497?auto=format&fit=crop&w=600&q=80"
+                        class="img-fluid">
+                </div>
+
+                <div class="col-6">
+                    <img src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=600&q=80"
+                        class="img-fluid">
+                </div>
+
+                <div class="col-6">
+                    <img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=600&q=80"
+                        class="img-fluid">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 

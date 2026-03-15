@@ -21,6 +21,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
+# Customize admin interface look and feel
+admin.site.site_header = "CivicScore Administration"
+admin.site.site_title = "CivicScore Admin"
+admin.site.index_title = "Manage Activities & Civic Scores"
 
 urlpatterns = [
     path('admin/', admin.site.urls),
