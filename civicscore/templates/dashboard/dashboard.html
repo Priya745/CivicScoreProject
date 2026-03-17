@@ -163,9 +163,10 @@ body{
             </p>
         </div>
 
-        <a href="{% url 'add_activity' %}" class="btn btn-gradient">
-            ➕ Submit Activity
-        </a>
+        <div class="d-flex gap-2">
+            <a href="{% url 'add_activity' %}" class="btn btn-gradient">➕ Submit Activity</a>
+            <a href="{% url 'rewards_list' %}" class="btn btn-outline-primary">🎁 Redeem Rewards</a>
+        </div>
 
     </div>
 

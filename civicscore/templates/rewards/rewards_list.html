@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block title %}
+Rewards | CivicScore
+{% endblock %}
+
+{% block content %}
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --text-main: #18181b;
+    --text-muted: #52525b;
+    --accent-blue: #3b82f6;
+    --accent-purple: #8b5cf6;
+    --accent-teal: #14b8a6;
+    --glass-bg: rgba(255,255,255,0.7);
+    --glass-border: rgba(255,255,255,0.4);
+}
+body { font-family: 'Poppins', sans-serif; background: #fafafa; }
+.page-header { margin-top: 60px; margin-bottom: 30px; }
+.page-header h1 { font-weight: 900; font-size: 36px; }
+.text-gradient {
+    background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 8px 32px rgba(31,38,135,0.07);
+    transition: 0.3s;
+}
+.glass-card:hover { box-shadow: 0 12px 40px rgba(31,38,135,0.1); }
+.reward-type-badge {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+.btn-gradient {
+    background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+    color: white;
+    border: none;
+    border-radius: 40px;
+    padding: 10px 20px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0.9rem;
+}
+.btn-gradient:hover { color: white; opacity: 0.9; }
+.btn-gradient:disabled, .btn-gradient.disabled { opacity: 0.6; pointer-events: none; }
+.points-badge { font-weight: 700; color: var(--accent-purple); }
+</style>
+
+<div class="container">
+    <div class="page-header d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <h1>Redeem <span class="text-gradient">Rewards</span></h1>
+        {% if user.is_authenticated %}
+        <div class="d-flex align-items-center gap-3">
+            <span class="text-muted">Your points:</span>
+            <span class="points-badge fs-5">{{ user_points }}</span>
+            <a href="{% url 'my_rewards' %}" class="btn btn-outline-primary">My Rewards</a>
+        </div>
+        {% else %}
+        <a href="{% url 'login' %}" class="btn btn-primary">Login to Redeem</a>
+        {% endif %}
+    </div>
+
+    <p class="text-muted mb-4">
+        NGOs and charities offer recognition and opportunities. Use your civic score points to redeem rewards.
+    </p>
+
+    <div class="row g-4">
+        {% for reward in rewards %}
+        <div class="col-md-6 col-lg-4">
+            <div class="glass-card h-100 d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <span class="reward-type-badge bg-light text-dark">{{ reward.get_reward_type_display }}</span>
+                    <span class="points-badge">{{ reward.points_required }} pts</span>
+                </div>
+                <h5 class="mb-2">{{ reward.title }}</h5>
+                <p class="text-muted small mb-2">{{ reward.ngo.name }}</p>
+                <p class="small text-secondary flex-grow-1">{{ reward.description|truncatewords:20 }}</p>
+                {% if user.is_authenticated %}
+                    {% if user_points >= reward.points_required %}
+                    <a href="{% url 'redeem_reward' reward.id %}" class="btn-gradient w-100 text-center mt-2">
+                        Redeem
+                    </a>
+                    {% else %}
+                    <span class="btn btn-secondary w-100 mt-2 disabled">Need {{ reward.points_required }} pts</span>
+                    {% endif %}
+                {% else %}
+                <a href="{% url 'login' %}?next={{ request.path }}" class="btn-gradient w-100 text-center mt-2">Login to Redeem</a>
+                {% endif %}
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="glass-card text-center py-5 text-muted">
+                No rewards available at the moment. Check back later!
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

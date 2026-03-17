@@ -45,6 +45,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'leaderboard' %}">Leaderboard</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'rewards_list' %}">Rewards</a>
+                </li>
 
                 {% if user.is_authenticated %}
                 <li class="nav-item">
@@ -55,6 +58,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'my_activities' %}">My Activities</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'my_rewards' %}">My Rewards</a>
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'logout' %}" class="nav-link btn btn-danger text-white ms-2">Logout</a>

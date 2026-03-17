@@ -26,6 +26,9 @@ class ActivityAdmin(admin.ModelAdmin):
 
             civicscore.total_points += points
             civicscore.save()
+            # Keep CustomUser.civic_score in sync for reward redemption
+            obj.user.civic_score = (obj.user.civic_score or 0) + points
+            obj.user.save(update_fields=["civic_score"])
             points_added = True
 
         super().save_model(request, obj, form, change)
