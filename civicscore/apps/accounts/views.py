@@ -47,6 +47,7 @@ def register_view(request):
         name = request.POST.get("name")
         email = request.POST.get("email")
         username = request.POST.get("username")
+        city = request.POST.get("city")
         password1 = request.POST.get("password1")
         password2 = request.POST.get("password2")
 
@@ -68,7 +69,10 @@ def register_view(request):
        )
 
         # Save full name
-        user.first_name = name   #update
+        name_parts = (name or "").strip().split()
+        user.first_name = name_parts[0] if name_parts else ""
+        user.last_name = " ".join(name_parts[1:]) if len(name_parts) > 1 else ""
+        user.city = city
         user.save()
 
         messages.success(request, "Account created successfully!")
