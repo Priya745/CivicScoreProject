@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}
 Submit Activity | CivicScore
@@ -266,22 +267,22 @@ IMAGE SECTION
             <div class="row g-4 activity-gallery">
 
                 <div class="col-6">
-                    <img src="https://images.unsplash.com/photo-1469571486292-b53601010376?auto=format&fit=crop&w=600&q=80"
+                    <img src="{% static 'images/my_activities/my_activities_4.png' %}"
                         class="img-fluid">
                 </div>
 
                 <div class="col-6">
-                    <img src="https://images.unsplash.com/photo-1593113630400-ea4288922497?auto=format&fit=crop&w=600&q=80"
+                    <img src="{% static 'images/my_activities/my_activities_2.png' %}"
                         class="img-fluid">
                 </div>
 
                 <div class="col-6">
-                    <img src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=600&q=80"
+                    <img src="{% static 'images/my_activities/my_activities_3.png' %}"
                         class="img-fluid">
                 </div>
 
                 <div class="col-6">
-                    <img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=600&q=80"
+                    <img src="{% static 'images/my_activities/my_activities_1.png' %}"
                         class="img-fluid">
                 </div>
 

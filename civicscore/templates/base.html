@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
 
 <!-- ================= NAVBAR ================= -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -79,23 +79,24 @@
 </nav>
 
 <!-- ================= MAIN CONTENT ================= -->
-<div class="container mt-4">
-    {% if messages %}
-  {% for message in messages %}
-    <div class="alert alert-info text-center">
-        {{ message }}
+<main class="flex-grow-1">
+    <div class="container mt-4">
+        {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-info text-center">
+            {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+
+        {% block content %}
+        <!-- Page content comes here -->
+        {% endblock %}
     </div>
-  {% endfor %}
-{% endif %}
-
-    {% block content %}
-    <!-- Page content comes here -->
-    {% endblock %}
-
-</div>
+</main>
 
 <!-- ================= FOOTER ================= -->
-<footer class="bg-dark text-white text-center p-3 mt-5">
+<footer class="bg-dark text-white text-center p-3 mt-auto site-footer">
     <p>© 2026 CivicScore | Building Responsible Citizens 🌱</p>
 </footer>
 

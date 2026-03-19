@@ -16,7 +16,7 @@ def activities(request):
 
     if request.method == "POST":
 
-        form = ActivityForm(request.POST, request.FILES)
+        form = ActivityForm(request.POST, request.FILES)         #builds ActivityForm  -> linked to Activity model
 
         if form.is_valid():
 
@@ -25,9 +25,9 @@ def activities(request):
             activity.user = request.user
             activity.status = "pending"
 
-            activity.save()
+            activity.save()          #saves to database
 
-            return redirect("dashboard")
+            return redirect("dashboard")            #redirects to dashboard
 
     else:
         form = ActivityForm()
