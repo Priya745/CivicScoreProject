@@ -5,6 +5,8 @@ from django.contrib import messages
 from apps.core.models import CivicScore
 from .models import Reward, RedeemedReward, RewardNotification
 
+from django.views.decorators.cache import never_cache
+
 
 def _get_user_points(user):
     """Points come from CivicScore (same as dashboard), not CustomUser.civic_score."""
@@ -25,6 +27,7 @@ def rewards_list(request):
     return render(request, "rewards/rewards_list.html", context)
 
 
+@never_cache
 @login_required
 def redeem_reward(request, reward_id):
     """
@@ -57,6 +60,7 @@ def redeem_reward(request, reward_id):
     return redirect("my_rewards")
 
 
+@never_cache
 @login_required
 def my_rewards(request):
     """Show rewards redeemed by the logged-in user and their status."""
@@ -73,6 +77,7 @@ def my_rewards(request):
     return render(request, "rewards/my_rewards.html", context)
 
 
+@never_cache
 @login_required
 def mark_notification_read(request, notification_id):
     """Mark a notification as read and optionally redirect."""

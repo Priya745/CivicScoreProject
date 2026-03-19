@@ -3,8 +3,10 @@ from django.contrib.auth.decorators import login_required
 
 from apps.core.models import CivicScore
 from apps.activities.models import Activity
+from django.views.decorators.cache import never_cache
 
 
+@never_cache
 @login_required
 def dashboard(request):
     civicscore, _ = CivicScore.objects.get_or_create(user=request.user)

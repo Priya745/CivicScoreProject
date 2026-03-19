@@ -19,6 +19,7 @@ class Activity(models.Model):
         ("pending", "Pending"),
         ("approved", "Approved"),
         ("rejected", "Rejected"),
+        ("manual_review", "Manual Review"),   # Submitted without GPS — needs admin check
     ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -40,6 +41,19 @@ class Activity(models.Model):
 
     points = models.IntegerField(default=0)
 
+    # ── Geo-location fields (populated from EXIF GPS metadata) ───────────
+    latitude       = models.FloatField(null=True, blank=True)
+    longitude      = models.FloatField(null=True, blank=True)
+    is_geo_verified = models.BooleanField(
+        default=False,
+        help_text="True when the proof image contained valid GPS EXIF data.",
+    )
+
+    is_points_awarded = models.BooleanField(
+        default=False,
+        help_text="True when points for this activity have been added to the user's total score.",
+    )
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -50,14 +64,12 @@ class Activity(models.Model):
 def calculate_points(activity_type):
 
     points_map = {
-
-        "tree": 10,
-        "clean": 8,
-        "blood": 12,
-        "volunteer": 6,
-        "teaching": 7,
-        "others": 5,
-
+        "tree":      15,
+        "clean":     10,
+        "blood":     20,
+        "volunteer": 12,
+        "teaching":  14,
+        "others":     5,
     }
 
     return points_map.get(activity_type, 0)
