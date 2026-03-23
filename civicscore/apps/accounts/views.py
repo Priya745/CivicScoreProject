@@ -27,7 +27,11 @@ def login_view(request):
 
         if user:
             login(request, user)
-            return redirect('dashboard')
+            if user.is_superuser:
+                return redirect("/admin")
+            if user.is_staff:
+                return redirect("admin_dashboard")
+            return redirect("/home")
 
         return render(request,
                       "accounts/login.html",
@@ -36,9 +40,6 @@ def login_view(request):
     return render(request, "accounts/login.html")
   
 
-# @login_required
-# def dashboard(request):
-#     return render(request, "dashboard.html")
 
 def register_view(request):
 
@@ -48,6 +49,7 @@ def register_view(request):
         email = request.POST.get("email")
         username = request.POST.get("username")
         city = request.POST.get("city")
+        phone_number = request.POST.get("phone_number")
         password1 = request.POST.get("password1")
         password2 = request.POST.get("password2")
 
@@ -59,6 +61,11 @@ def register_view(request):
         # Username exists check (read)
         if User.objects.filter(username=username).exists():
             messages.error(request, "Username already exists")
+            return redirect("register")
+
+        # Phone number required
+        if not (phone_number or "").strip():
+            messages.error(request, "Phone number is required")
             return redirect("register")
 
         # Create User
@@ -73,6 +80,7 @@ def register_view(request):
         user.first_name = name_parts[0] if name_parts else ""
         user.last_name = " ".join(name_parts[1:]) if len(name_parts) > 1 else ""
         user.city = city
+        user.phone_number = phone_number.strip()
         user.save()
 
         messages.success(request, "Account created successfully!")

@@ -19,7 +19,7 @@ from django.urls import path, include
 
 from django.conf import settings
 from django.conf.urls.static import static
-
+from apps.users import views as user_views
 
 # Customize admin interface look and feel
 admin.site.site_header = "CivicScore Administration"
@@ -28,6 +28,7 @@ admin.site.index_title = "Manage Activities & Civic Scores"
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('admin-dashboard/', include('apps.dashboard.admin_urls')),
     path('accounts/', include('apps.accounts.urls')),
     path('activities/', include('apps.activities.urls')),
     path('reports/', include('apps.reports.urls')),
@@ -35,7 +36,7 @@ urlpatterns = [
     path('leaderboard/', include('apps.leaderboard.urls')),
     path('', include('apps.core.urls')),
     path('dashboard/', include('apps.dashboard.urls')),
-    
+    path('profile/', user_views.profile, name='profile'),
     
 ]
 

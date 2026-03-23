@@ -1,0 +1,48 @@
+{% extends "admin_dashboard/base_admin.html" %}
+
+{% block title %}Redeemed Rewards | CivicScore{% endblock %}
+
+{% block admin_content %}
+<h4 class="mb-3">Redeemed Rewards</h4>
+<div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Reward</th>
+                <th>NGO</th>
+                <th>Status</th>
+                <th>Redeemed At</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in redemptions %}
+            <tr>
+                <td>{{ item.user.username }}</td>
+                <td>{{ item.reward.title }}</td>
+                <td>{{ item.reward.ngo.name }}</td>
+                <td>{{ item.status|title }}</td>
+                <td>{{ item.redeemed_at }}</td>
+                <td class="d-flex gap-2">
+                    <form method="post" action="{% url 'update_redeemed_reward_status' item.id 'approved' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-success">Approve</button>
+                    </form>
+                    <form method="post" action="{% url 'update_redeemed_reward_status' item.id 'rejected' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-danger">Reject</button>
+                    </form>
+                    <form method="post" action="{% url 'update_redeemed_reward_status' item.id 'completed' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-primary">Delivered</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6" class="text-center text-muted">No redeemed rewards found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

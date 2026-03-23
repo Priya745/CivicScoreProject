@@ -159,6 +159,52 @@ color:#b45309;
 font-size:20px;
 }
 
+
+/* ==============================
+PAGINATION
+============================== */
+
+.pagination-nav{
+margin-top:24px;
+display:flex;
+justify-content:center;
+}
+
+.pagination-list{
+display:flex;
+align-items:center;
+gap:16px;
+list-style:none;
+margin:0;
+padding:0;
+}
+
+.pagination-btn{
+display:inline-block;
+padding:10px 18px;
+font-weight:600;
+color:var(--accent-purple);
+background:rgba(139,92,246,0.1);
+border-radius:12px;
+text-decoration:none;
+transition:0.2s;
+}
+
+.pagination-btn:hover{
+background:rgba(139,92,246,0.2);
+}
+
+.pagination-disabled{
+color:var(--text-muted);
+background:rgba(0,0,0,0.05);
+cursor:not-allowed;
+}
+
+.pagination-current{
+font-weight:600;
+color:var(--text-main);
+}
+
 </style>
 
 
@@ -202,15 +248,17 @@ Top citizens making the biggest impact in the community
 
 <tbody>
 {% for item in leaderboard %}
+{% with rank=page_obj.start_index|add:forloop.counter0 %}
 <tr>
-    <td class="rank {% if forloop.counter == 1 %}rank-1{% elif forloop.counter == 2 %}rank-2{% elif forloop.counter == 3 %}rank-3{% endif %}">
-        {% if forloop.counter == 1 %}🥇{% elif forloop.counter == 2 %}🥈{% elif forloop.counter == 3 %}🥉{% endif %}
-        {{ forloop.counter }}
+    <td class="rank {% if rank == 1 %}rank-1{% elif rank == 2 %}rank-2{% elif rank == 3 %}rank-3{% endif %}">
+        {% if rank == 1 %}🥇{% elif rank == 2 %}🥈{% elif rank == 3 %}🥉{% endif %}
+        {{ rank }}
     </td>
     <td>{{ item.user.username }}</td>
     <td>{{ item.total_points }}</td>
-    <td class="badge-icon">{% if forloop.counter <= 3 %}🏆{% else %}🌟{% endif %}</td>
+    <td class="badge-icon">{% if rank <= 3 %}🏆{% else %}🌟{% endif %}</td>
 </tr>
+{% endwith %}
 {% empty %}
 <tr>
     <td colspan="4" class="text-center text-muted py-5">No scores yet. Submit activities to appear on the leaderboard!</td>
@@ -219,6 +267,30 @@ Top citizens making the biggest impact in the community
 </tbody>
 
 </table>
+
+{% if page_obj.has_other_pages %}
+<nav class="pagination-nav" aria-label="Leaderboard pagination">
+    <ul class="pagination-list">
+        <li>
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}" class="pagination-btn">← Previous</a>
+            {% else %}
+            <span class="pagination-btn pagination-disabled">← Previous</span>
+            {% endif %}
+        </li>
+        <li>
+            <span class="pagination-current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        </li>
+        <li>
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="pagination-btn">Next →</a>
+            {% else %}
+            <span class="pagination-btn pagination-disabled">Next →</span>
+            {% endif %}
+        </li>
+    </ul>
+</nav>
+{% endif %}
 
 </div>
 

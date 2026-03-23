@@ -31,3 +31,5 @@ def handle_activity_points(sender, instance, created, **kwargs):
         
         # Use update_fields to avoid triggering post_save again (infinite recursion)
         instance.save(update_fields=["is_points_awarded", "points"])
+
+

@@ -1,0 +1,38 @@
+{% extends "admin_dashboard/base_admin.html" %}
+
+{% block title %}Reward Notifications | CivicScore{% endblock %}
+
+{% block admin_content %}
+<h4 class="mb-3">Reward Notifications</h4>
+
+<form method="post" class="admin-card mb-4">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Send Notification</button>
+</form>
+
+<div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Message</th>
+                <th>Read</th>
+                <th>Created At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for notification in notifications %}
+            <tr>
+                <td>{{ notification.user.username }}</td>
+                <td>{{ notification.message }}</td>
+                <td>{{ notification.is_read|yesno:"Yes,No" }}</td>
+                <td>{{ notification.created_at }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4" class="text-center text-muted">No notifications found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

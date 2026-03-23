@@ -1,0 +1,29 @@
+{% extends "admin_dashboard/base_admin.html" %}
+
+{% block title %}Leaderboard | Admin Dashboard{% endblock %}
+
+{% block admin_content %}
+<h4 class="mb-4">Leaderboard</h4>
+<div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Username</th>
+                <th>Total Points</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in leaderboard %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ entry.user.username }}</td>
+                <td>{{ entry.total_points }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="3" class="text-center text-muted">No leaderboard data found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

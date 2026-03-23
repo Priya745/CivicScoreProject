@@ -10,7 +10,7 @@ class NGOAdmin(admin.ModelAdmin):
     search_fields = ("name", "email")
 
 
-class RewardInline(admin.TabularInline):
+class RewardInline(admin.TabularInline):       #This allows editing rewards inside NGO page (like nested data)
     model = Reward
     extra = 0
     fields = ("title", "reward_type", "points_required", "is_active")
@@ -33,10 +33,10 @@ class RedeemedRewardAdmin(admin.ModelAdmin):
     list_editable = ("status",)
     readonly_fields = ("redeemed_at",)
 
-    def reward_ngo(self, obj):
+    def reward_ngo(self, obj):                #Fetches NGO name from: RedeemedReward → Reward → NGO
         return obj.reward.ngo.name
 
-    reward_ngo.short_description = "NGO"
+    reward_ngo.short_description = "NGO"       #Sets column title in admin
 
     def save_model(self, request, obj, form, change):
         if change and "status" in form.changed_data:

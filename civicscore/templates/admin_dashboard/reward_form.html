@@ -1,0 +1,15 @@
+{% extends "admin_dashboard/base_admin.html" %}
+
+{% block title %}{{ form_title }} | CivicScore{% endblock %}
+
+{% block admin_content %}
+<h4 class="mb-3">{{ form_title }}</h4>
+<form method="post" class="admin-card">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a href="{% url 'admin_rewards' %}" class="btn btn-outline-secondary">Cancel</a>
+    </div>
+</form>
+{% endblock %}
