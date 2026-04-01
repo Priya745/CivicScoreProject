@@ -3,6 +3,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
+from django.core.mail import send_mail
+from django.conf import settings
 
 from apps.activities.models import Activity
 from apps.core.models import CivicScore
@@ -282,7 +284,30 @@ def update_redeemed_reward_status(request, redemption_id, status):
     redemption.status = status
     redemption.save(update_fields=["status"])
     messages.success(request, f"Redemption marked as {status}.")
+    # Send redemption status email directly to user
+    if redemption.user.email:
+        status_messages = {
+            "approved": "Your redemption request has been APPROVED. The reward will be processed shortly.",
+            "completed": "Your redemption has been marked as COMPLETED. Enjoy your reward!",
+            "rejected": "Unfortunately, your redemption request has been REJECTED. Please contact support if you think this is an error.",
+        }
+        try:
+            send_mail(
+                subject=f"Your Reward Redemption is {status.capitalize()} \u2013 CivicScore",
+                message=(
+                    f"Hi {redemption.user.username},\n\n"
+                    f"Update on your redemption for '{redemption.reward.name}':\n\n"
+                    f"{status_messages.get(status, '')}\n\n"
+                    "\u2013 The CivicScore Team"
+                ),
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[redemption.user.email],
+                fail_silently=False,
+            )
+        except Exception as e:
+            print(f"EMAIL ERROR: {e}")
     return redirect("admin_redeemed_rewards")
+
 
 
 @login_required

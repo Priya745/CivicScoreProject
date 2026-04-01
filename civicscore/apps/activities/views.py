@@ -65,7 +65,7 @@ def activities(request):
                     geo = extract_gps_info(proof_file)
 
                     if geo["has_gps"]:
-                        # ✅ Valid GPS — store coordinates, mark verified
+                        # Valid GPS — store coordinates, mark verified
                         activity.latitude       = geo["latitude"]
                         activity.longitude      = geo["longitude"]
                         activity.is_geo_verified = True
@@ -73,19 +73,19 @@ def activities(request):
 
                         messages.success(
                             request,
-                            "✅ Activity submitted successfully with verified "
+                            "Activity submitted successfully with verified "
                             f"location ({geo['latitude']:.5f}, "
                             f"{geo['longitude']:.5f}).",
                         )
 
                     else:
-                        # ⚠️ No GPS tag — allow submission but flag for review
+                        #  No GPS tag — allow submission but flag for review
                         activity.is_geo_verified = False
                         activity.status         = "manual_review"
 
                         messages.warning(
                             request,
-                            "⚠️ Your proof image does not contain GPS location "
+                            " Your proof image does not contain GPS location "
                             "data. Your submission has been saved and will be "
                             "reviewed manually by our team. "
                             "Tip: Upload a photo taken directly from your phone "
@@ -105,7 +105,7 @@ def activities(request):
 
                     messages.warning(
                         request,
-                        "⚠️ We could not read location data from your image. "
+                        " We could not read location data from your image. "
                         "Your submission has been saved for manual review.",
                     )
 
@@ -116,7 +116,7 @@ def activities(request):
 
                 messages.warning(
                     request,
-                    "⚠️ No proof file was detected. Submission saved for "
+                    "No proof file was detected. Submission saved for "
                     "manual review.",
                 )
 
@@ -136,9 +136,6 @@ def activities(request):
     )
 
 
-# ---------------------------------------------------------------------------
-# My Activities — listing
-# ---------------------------------------------------------------------------
 
 @never_cache
 @login_required

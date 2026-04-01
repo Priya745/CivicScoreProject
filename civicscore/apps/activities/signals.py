@@ -29,7 +29,7 @@ def handle_activity_points(sender, instance, created, **kwargs):
         # 4. Mark as awarded to prevent double-counting on future edits
         instance.is_points_awarded = True
         
+        
         # Use update_fields to avoid triggering post_save again (infinite recursion)
         instance.save(update_fields=["is_points_awarded", "points"])
-
 

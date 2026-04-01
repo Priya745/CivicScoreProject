@@ -9,7 +9,8 @@ from django.contrib import messages
 # from apps.users.models import CustomUser
 
 from django.contrib.auth import logout
-
+from django.core.mail import send_mail
+from django.conf import settings
 
 User = get_user_model()
 
@@ -84,7 +85,25 @@ def register_view(request):
         user.save()
 
         messages.success(request, "Account created successfully!")
+        # Send welcome email directly (synchronous, no Celery needed)
+        if user.email:
+            try:
+                send_mail(
+                    subject="Welcome to CivicScore! 🎉",
+                    message=(
+                        f"Hi {user.username},\n\n"
+                        "Welcome to CivicScore! Your account has been created successfully.\n\n"
+                        "Start logging your civic activities to earn points and climb the leaderboard.\n\n"
+                        "– The CivicScore Team"
+                    ),
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[user.email],
+                    fail_silently=True,
+                )
+            except Exception:
+                pass  # Don't block registration if email fails
         return redirect("login")
+
 
     return render(request, "accounts/register.html")
 

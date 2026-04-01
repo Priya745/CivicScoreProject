@@ -139,3 +139,22 @@ MEDIA_ROOT = "media"
 
 SESSION_COOKIE_AGE = 86400
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+# ─── Celery Configuration (using Memurai/Redis on Windows) ───────────────────
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = TIME_ZONE
+
+# ─── Email Configuration ──────────────────────────────────────────────────────
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True       # Port 465 uses SSL (TLS was for port 587, blocked on this network)
+EMAIL_USE_TLS = False      # Must be False when EMAIL_USE_SSL = True
+EMAIL_HOST_USER = 'priya.new456@gmail.com'
+EMAIL_HOST_PASSWORD = 'rxwtcvyualpcjvem'
+DEFAULT_FROM_EMAIL = 'priya.new456@gmail.com'
+
